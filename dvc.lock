@@ -11,6 +11,18 @@ stages:
       hash: md5
       md5: 5b4fb2ba36b854ab72b49ddd3088b154
       size: 1389
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: e7d7b7e12185792c1f9454737841c67d
+      size: 1084
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: 3c33aa448ccfae6d45ae46f321f07b17
+      size: 588
+    - path: src/utils/__init__.py
+      hash: md5
+      md5: c9dd9d34068de1e2309a984c820da056
+      size: 3258
     outs:
     - path: data/raw/test.csv
       hash: md5
@@ -20,3 +32,39 @@ stages:
       hash: md5
       md5: f4d842d081d7d88ea452649ccfb5c09a
       size: 9386
+  data_preprocess:
+    cmd: python src/data/data_preprocess.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: e41438848a3c37c3c89320988571e109
+      size: 2449
+    - path: data/raw/train.csv
+      hash: md5
+      md5: f4d842d081d7d88ea452649ccfb5c09a
+      size: 9386
+    - path: src/data/data_preprocess.py
+      hash: md5
+      md5: 7bf613a6362cf41429ab75c75b1d3c8c
+      size: 5177
+    - path: src/exception/__init__.py
+      hash: md5
+      md5: e7d7b7e12185792c1f9454737841c67d
+      size: 1084
+    - path: src/logger/__init__.py
+      hash: md5
+      md5: 3c33aa448ccfae6d45ae46f321f07b17
+      size: 588
+    outs:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: e41438848a3c37c3c89320988571e109
+      size: 2449
+    - path: data/interim/train.csv
+      hash: md5
+      md5: f4d842d081d7d88ea452649ccfb5c09a
+      size: 9386
+    - path: objects/preprosser/object.pkl
+      hash: md5
+      md5: b1fb0c633642ed4015769b97df026f74
+      size: 4478

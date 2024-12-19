@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from src.logger import logging
 from src.exception import CustomException
+import joblib
 
 
 
@@ -52,3 +53,38 @@ class DataHandler:
             logging.error(f'Unexpected error occurred while saving the data: {e}')
             raise CustomException(e, sys)
 
+    def save_object(self, object, file_path: str) :
+        try:
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            with open(file_path, 'wb') as file:
+                joblib.dump(object, file)
+        except Exception as e:
+            logging.info(
+                "unexpected error occured while saving object"
+            )
+            raise CustomException(e, sys)
+        
+        
+    def save_array(self, array, file_path: str) -> None:
+        try:
+
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            if isinstance(array, np.ndarray):
+                np.save(file_path, array)  
+            else:
+                raise TypeError("Only NumPy arrays can be saved using this method.")
+          
+        except Exception as e:
+            logging.error(f"Unexpected error occurred while saving array: {e}")
+            raise CustomException(e, sys)
+    
+ 
+    def load_array(self, file_path: str):
+        try:
+            
+            if file_path.endswith(".npy"):
+                return np.load(file_path)  
+                raise ValueError("Unsupported file format. Only .npy files are supported.")
+        except Exception as e:
+            logging.error(f"Unexpected error occurred while loading array: {e}")
+            raise CustomException(e, sys)

@@ -4,6 +4,22 @@ stages:
     deps:
       - data/external/ML_Intern_Assignment_Data.csv
       - src/data/data_injection.py
+      - src/utils/__init__.py
+      - src/exception/__init__.py
+      - src/logger/__init__.py
     outs:
       - data/raw/train.csv
       - data/raw/test.csv
+
+  data_preprocess:
+    cmd: python src/data/data_preprocess.py
+    deps:
+      - src/data/data_preprocess.py
+      - data/raw/train.csv
+      - data/raw/test.csv
+      - src/exception/__init__.py
+      - src/logger/__init__.py
+    outs:
+      - data/interim/train.csv
+      - data/interim/test.csv
+      - objects/preprosser/object.pkl
