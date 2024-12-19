@@ -1,5 +1,6 @@
 import os
 import sys
+import dataclasses
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -85,10 +86,19 @@ class DataTransformation:
                 )),
                 
             ])
+            logging.info(f"x_train shape before preprocessing: {x_train.shape}")
             transormed_x_train = preprocessor.fit_transform(x_train)
+            self.data_handler.save_object(preprocessor, self.data_transformation_config.preprocessor_path)
+            logging.info(f"x_train shape after transformation: {transormed_x_train.shape}")
+            logging.info(f'preprocessor saved at {self.data_transformation_config.preprocessor_path}')
+
 
             x_train_resamp , y_train_resmp = IMB_preprocessor.fit_resample(x_train , y_train)
-            logging.info(f'imbpipeline applied for train_X,train_y')
+            x_train_resampled, y_train_resampled = IMB_preprocessor.fit_resample(x_train, y_train)
+          
+
+    
+
             #self.data_handler.save_array(x_train_resamp,self.data_transformation_config.x_train_features)
             #self.data_handler.save_array(y_train_resmp, self.data_transformation_config.y_train_feature)
             if isinstance(x_train_resamp, np.ndarray):
@@ -101,9 +111,7 @@ class DataTransformation:
             else:
                 self.data_handler.save_array(np.array(y_train_resmp), self.data_transformation_config.y_train_feature)
 
-            self.data_handler.save_object(preprocessor, self.data_transformation_config.preprocessor_path)
-            logging.info(f'preprocessor saved at {self.data_transformation_config.preprocessor_path}')
-
+            
             return preprocessor
 
          

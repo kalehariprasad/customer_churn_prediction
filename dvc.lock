@@ -21,8 +21,8 @@ stages:
       size: 588
     - path: src/utils/__init__.py
       hash: md5
-      md5: b3e03d0882fe2cf25cb39ec74f6ca4e1
-      size: 3439
+      md5: c85f368f13c8236c54feae8507fce64b
+      size: 5163
     outs:
     - path: data/raw/test.csv
       hash: md5

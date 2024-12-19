@@ -5,7 +5,7 @@ import numpy as np
 from src.logger import logging
 from src.exception import CustomException
 import joblib
-
+from sklearn.metrics import classification_report,accuracy_score,confusion_matrix
 
 
 class DataHandler:
@@ -65,6 +65,21 @@ class DataHandler:
             except Exception as e:
                 logging.error(f"Unexpected error occurred while saving object: {str(e)}")
                 raise CustomException(f"Error occurred while saving object: {str(e)}", sys)
+    def load_object(self, file_path: str):
+        try:
+            
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"The file at {file_path} does not exist.")
+            
+            with open(file_path, 'rb') as file:
+                obj = joblib.load(file)
+            
+            logging.info(f"Object loaded successfully from: {file_path}")
+            return obj
+        
+        except Exception as e:
+            logging.error(f"Unexpected error occurred while loading object: {str(e)}")
+            raise CustomException(f"Error occurred while loading object: {str(e)}", sys)
 
         
         
@@ -91,3 +106,31 @@ class DataHandler:
         except Exception as e:
             logging.error(f"Unexpected error occurred while loading array: {e}")
             raise CustomException(e, sys)
+class Model:
+    def __init__(self):
+        pass
+
+    def train_model(self, model, train_x,train_y):
+        try:
+            model.fit (train_x,train_y)
+            return model
+
+        except Exception as e:
+            logging.error(f"Unexpected error occurred while fitting model: {e}")
+            raise CustomException(e, sys)
+    def evaluate_model(self, model, test_x,test_y):
+        try:
+            
+            y_pred = model.predict(test_x)
+            accuracy = accuracy_score(test_y, y_pred)
+            matrix = confusion_matrix(test_y, y_pred)
+            report = classification_report(test_y, y_pred)
+            logging.info(f'testing scoer for {model} is {accuracy}')
+            logging.info(f'confusion matrix for {model} are follows as {matrix}')
+
+            return report
+
+            
+        except Exception as e:
+            logging.error(f"Unexpected error occurred while Evaluating model : {e}")
+            raise CustomException (e, sys)
