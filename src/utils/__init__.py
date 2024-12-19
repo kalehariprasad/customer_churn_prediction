@@ -53,16 +53,19 @@ class DataHandler:
             logging.error(f'Unexpected error occurred while saving the data: {e}')
             raise CustomException(e, sys)
 
-    def save_object(self, object, file_path: str) :
-        try:
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            with open(file_path, 'wb') as file:
-                joblib.dump(object, file)
-        except Exception as e:
-            logging.info(
-                "unexpected error occured while saving object"
-            )
-            raise CustomException(e, sys)
+    def save_object(self, object, file_path: str):
+            try:
+               
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                with open(file_path, 'wb') as file:
+                    joblib.dump(object, file)
+                
+                logging.info(f"Object saved successfully at: {file_path}")
+            
+            except Exception as e:
+                logging.error(f"Unexpected error occurred while saving object: {str(e)}")
+                raise CustomException(f"Error occurred while saving object: {str(e)}", sys)
+
         
         
     def save_array(self, array, file_path: str) -> None:
