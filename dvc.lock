@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  data_injection:
+    cmd: python src/data/data_injection.py
+    deps:
+    - path: data/external/ML_Intern_Assignment_Data.csv
+      hash: md5
+      md5: d55747d171dcbabff9e0a9b1e6c8dd87
+      size: 11705
+    - path: src/data/data_injection.py
+      hash: md5
+      md5: 5b4fb2ba36b854ab72b49ddd3088b154
+      size: 1389
+    outs:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: e41438848a3c37c3c89320988571e109
+      size: 2449
+    - path: data/raw/train.csv
+      hash: md5
+      md5: f4d842d081d7d88ea452649ccfb5c09a
+      size: 9386

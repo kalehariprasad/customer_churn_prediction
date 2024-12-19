@@ -1,0 +1,9 @@
+stages:
+  data_injection:
+    cmd: python src/data/data_injection.py
+    deps:
+      - data/external/ML_Intern_Assignment_Data.csv
+      - src/data/data_injection.py
+    outs:
+      - data/raw/train.csv
+      - data/raw/test.csv
